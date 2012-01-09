@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ContactPhotoHelper</RootNamespace>
-    <AssemblyName>ContactPhotoHelper</AssemblyName>
+    <AssemblyName>name.zwc.Caller.Handlers.ContactPhotoHelper</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,17 +32,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="fastJSON, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\fastJSON.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="ContactPhotoHelper.cs" />
+    <Compile Include="DBHelper.cs" />
+    <Compile Include="Helpers.cs" />
+    <Compile Include="JPEGCompression.cs" />
+    <Compile Include="MD5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ContactPhotoHelperFiles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\ContactPhotoHelper.mdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lib\fastJSON.dll" />
+    <Content Include="lib\fastJSON.pdb" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
