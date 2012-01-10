@@ -12,6 +12,7 @@ using System.IO;
 using System.Drawing;
 using ContactPhotoHelper;
 using System.Data.OleDb;
+using System.Collections;
 
 namespace name.zwc.Caller.Handlers
 {
@@ -83,6 +84,22 @@ namespace name.zwc.Caller.Handlers
             return md5Value;
         }
 
+        static List<MD5> parseMD5ListFromJSON(string input)
+        {
+            List<MD5> md5List = new List<MD5>();
+            ArrayList arrayList = (ArrayList)JSON.Instance.Parse(input);
+            foreach (object item in arrayList)
+            {
+                Dictionary<string, object> itemDictionary = (Dictionary<string, object>)item;
+                md5List.Add(new MD5()
+                {
+                    Key = itemDictionary["Key"].ToString(),
+                    Value = itemDictionary["Value"].ToString()
+                });
+            }
+            return md5List;
+        }
+
         public static String SubmitPhoto(String input, Dictionary<String, String> args)
         {
             string key = args["key"];
@@ -102,9 +119,10 @@ namespace name.zwc.Caller.Handlers
 
             return "true";
         }
+        
         public static String CheckUpdate(String input, Dictionary<String, String> args)
         {
-            List<MD5> md5List = JSON.Instance.ToObject<List<MD5>>(input);
+            List<MD5> md5List = parseMD5ListFromJSON(input);
 
             //
             // Query md5 list from db
@@ -140,6 +158,7 @@ namespace name.zwc.Caller.Handlers
             List<MD5> md5ResultList = new List<MD5>();
             foreach (MD5 md5 in md5List)
             {
+                bool found = false;
                 foreach (MD5 md5InDb in md5DbList)
                 {
                     if (md5.Key == md5InDb.Key)
@@ -148,8 +167,13 @@ namespace name.zwc.Caller.Handlers
                         {
                             md5ResultList.Add(md5InDb);
                         }
+                        found = true;
                         break;
                     }
+                }
+                if (found)
+                {
+                    continue;
                 }
 
                 // No existing md5 value in the db, try to calculate one.
@@ -161,7 +185,7 @@ namespace name.zwc.Caller.Handlers
                 });
             }
 
-            return null;
+            return JSON.Instance.ToJSON(md5ResultList);
         }
     }
 }
