@@ -94,7 +94,7 @@ namespace name.zwc.Caller.Handlers
                 md5List.Add(new MD5()
                 {
                     Key = itemDictionary["Key"].ToString(),
-                    Value = itemDictionary["Value"].ToString()
+                    Value = itemDictionary["Value"] == null ? "" : itemDictionary["Value"].ToString()
                 });
             }
             return md5List;
