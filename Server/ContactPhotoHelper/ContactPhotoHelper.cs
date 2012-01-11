@@ -178,11 +178,14 @@ namespace name.zwc.Caller.Handlers
 
                 // No existing md5 value in the db, try to calculate one.
                 String md5Value = updateOrInsertMD5(md5.Key);
-                md5ResultList.Add(new MD5() 
+                if (!String.IsNullOrEmpty(md5Value))
                 {
-                    Key = md5.Key,
-                    Value = md5Value
-                });
+                    md5ResultList.Add(new MD5()
+                    {
+                        Key = md5.Key,
+                        Value = md5Value
+                    });
+                }
             }
 
             return JSON.Instance.ToJSON(md5ResultList);

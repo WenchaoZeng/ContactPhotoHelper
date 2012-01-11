@@ -39,7 +39,7 @@ namespace Test
             {
                 List<MD5> md5List = new List<MD5>() 
                 {
-                    //new MD5() { Key = "13564311086", Value = "509a452cd456be3d240fd9e7e4bf5c98"},
+                    new MD5() { Key = "135643110863"},
                     new MD5() { Key = "135643110862"/*, Value = "509a452cd456be3d240fd9e7e4bf5c98"*/}
                 };
                 String input = JSON.Instance.ToJSON(md5List);
