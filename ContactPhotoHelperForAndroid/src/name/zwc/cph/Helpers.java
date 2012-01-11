@@ -2,9 +2,11 @@ package name.zwc.cph;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 
 import android.content.ContentResolver;
 import android.content.Context;
@@ -15,7 +17,9 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 public class Helpers
 {
-	public static String[] getMobileNumbersFromContact(Context context, String countryCode)
+	public static String countryCode = "86";
+	
+	public static String[] getMobileNumbersFromContact(Context context)
 	{
 		List<String> numbers = new ArrayList<String>();
 		
@@ -23,15 +27,10 @@ public class Helpers
 		Cursor cursor = contentResolver.query(Phone.CONTENT_URI, new String[] { Phone.NUMBER }, null, null, null);
 		try
 		{
-			String phone = null;
 			while (cursor.moveToNext())
 			{
-				phone = cursor.getString(0);
-				phone = phone.replace("-", "").replace("+", "");
-				if (!phone.startsWith(countryCode))
-				{
-					phone = countryCode + phone;
-				}
+				String phone = cursor.getString(0);
+				phone = correctPhoneNumber(phone);
 			    numbers.add(phone);
 			}
 		}
@@ -43,6 +42,16 @@ public class Helpers
 		return numbers.toArray(new String[0]);
 	}
 	
+	public static String correctPhoneNumber(String number)
+	{
+		number = number.replace("-", "").replace("+", "");
+		if (!number.startsWith(countryCode))
+		{
+			number = countryCode + number;
+		}
+		return number;
+	}
+
 	public static byte[] compressBitmap(Bitmap bitmap)
 	{
 		ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
