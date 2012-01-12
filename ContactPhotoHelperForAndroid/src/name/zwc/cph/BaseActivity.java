@@ -1,5 +1,11 @@
 package name.zwc.cph;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.SharedPreferences;
@@ -53,5 +59,49 @@ public class BaseActivity extends Activity
 		SharedPreferences.Editor editor = preferences.edit();
 		editor.putInt("country_code", value);
 		editor.commit();
+	}
+	
+	protected void setBackgroundTask(int buttonViewID, Runnable task)
+	{
+		BackgroundTaskOnClickListener onClickListener = new BackgroundTaskOnClickListener(context, buttonViewID, task);
+		findViewById(buttonViewID).setOnClickListener(onClickListener);
+	}
+	
+	public void setMD5Array(MD5[] md5Array)
+	{
+		SharedPreferences preferences = getSharedPreferences("user", Application.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preferences.edit();
+		String jsonString = new Gson().toJson(md5Array);
+		editor.putString("md5_array", jsonString);
+		editor.commit();
+	}
+	public MD5[] getMD5Array()
+	{
+		SharedPreferences preferences = getSharedPreferences("user", Application.MODE_PRIVATE);
+		String jsonString = preferences.getString("md5_array", "[]");
+		MD5[] md5ResultArray = new Gson().fromJson(jsonString, MD5[].class);
+		return md5ResultArray;
+	}
+	public void updateMD5Array(MD5[] md5UpdatedArray)
+	{
+		List<MD5> md5List = new ArrayList<MD5>(Arrays.asList(getMD5Array()));
+		for (MD5 updatedMD5 : md5UpdatedArray)
+		{
+			boolean found = false;
+			for (MD5 mdInCache : md5List)
+			{
+				if (mdInCache.Key.equals(updatedMD5.Key))
+				{
+					mdInCache.Value = updatedMD5.Value;
+					found = true;
+					break;
+				}
+			}
+			if (!found)
+			{
+				md5List.add(updatedMD5);
+			}
+		}
+		setMD5Array(md5List.toArray(new MD5[0]));
 	}
 }

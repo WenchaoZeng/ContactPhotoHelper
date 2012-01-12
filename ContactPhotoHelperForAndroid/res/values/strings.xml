@@ -3,10 +3,9 @@
     <string name="app_name">联系人图片助手</string>
     <string name="country_code">国家代码</string>
     <string name="ok">确定</string>
-    <string name="upload_description">上传描述</string>
-    <string name="upload">上传</string>
-    <string name="download">下载</string>
-    <string name="download_description">下载描述</string>
+    <string name="upload">上传自己的头像</string>
+    <string name="download">重新下载全部头像</string>
     <string name="phone_number">手机号码</string>
     <string name="picture">头像 (点击图片拍照)</string>
+    <string name="check_update">检查更新头像</string>
 </resources>
