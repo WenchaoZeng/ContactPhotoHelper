@@ -7,5 +7,5 @@
     <string name="download">重新下载全部头像</string>
     <string name="phone_number">手机号码</string>
     <string name="picture">头像 (点击图片拍照)</string>
-    <string name="check_update">检查更新头像</string>
+    <string name="check_update">更新通讯录头像</string>
 </resources>
