@@ -83,7 +83,7 @@ public class WebServices
 		}
 		catch (JsonSyntaxException ex)
 		{
-			return new MD5[0];
+			return null;
 		}
 	}
 	

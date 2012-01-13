@@ -228,6 +228,11 @@ public class ContactPhotoHelperForAndroidActivity extends BaseActivity
 			}
 		}
 		MD5[] md5UpdatedArray = service.checkUpdate(md5Array);
+		if (md5UpdatedArray == null)
+		{
+			print("网络错误");
+    		return;
+		}
 		if (md5UpdatedArray.length <= 0)
     	{
 			print("没有可更新的头像");
